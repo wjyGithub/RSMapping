@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjy.rsmapping.mapper.ThingTestMapper">
+    <select id="queryInfo" resultType="com.wjy.rsmapping.table.Table">
+        SELECT
+          t.THING_ID,
+          t.CODE,
+          t.NAME
+        FROM  t_thing t
+    </select>
+</mapper>
