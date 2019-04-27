@@ -98,9 +98,9 @@ public class ResultSetInterceptor implements Interceptor {
                 table.setKeyAlias(columnNameFormat(rsmd.getColumnName(1)));
                 table.setMidAlias(columnNameFormat(rsmd.getColumnName(2)));
                 table.setValueAlias(columnNameFormat(rsmd.getColumnName(3)));
-                Object key = this.getObject(resultSet, 1, thr, getTypeByIndex(types,1));
-                Object mid = this.getObject(resultSet, 2, thr, getTypeByIndex(types,2));
-                Object value = this.getObject(resultSet, 3, thr, getTypeByIndex(types,3));
+                Object key = this.getObject(resultSet, 1, thr, getTypeByIndex(types,0));
+                Object mid = this.getObject(resultSet, 2, thr, getTypeByIndex(types,1));
+                Object value = this.getObject(resultSet, 3, thr, getTypeByIndex(types,2));
                 table.put(key, mid, value);
                 tables.add(table);
             }
