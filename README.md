@@ -14,7 +14,7 @@ UserMapper.java
 public interface UserMapper {
 
     @RSMap
-    List<Table<String,String,String>> queryUser();
+    Table<String,String,String> queryUser();
 }
 
 如上所示:
