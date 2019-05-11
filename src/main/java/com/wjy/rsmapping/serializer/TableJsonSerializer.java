@@ -1,5 +1,6 @@
 package com.wjy.rsmapping.serializer;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,13 +25,15 @@ public class TableJsonSerializer extends JsonSerializer<Table> {
         ObjectMapper om = new ObjectMapper();
         Set<Table.TableEntry> set = table.entrySet();
         if(set != null && !set.isEmpty()) {
-            JSONObject tableJson = new JSONObject();
+            JSONArray tableJsons = new JSONArray();
             for(Table.TableEntry tableEntry : set) {
+                JSONObject tableJson = new JSONObject();
                 tableJson.put(table.getKeyAlias(),tableEntry.getKey());
                 tableJson.put(table.getMidAlias(),tableEntry.getMid());
                 tableJson.put(table.getValueAlias(),tableEntry.getValue());
+                tableJsons.add(tableJson);
             }
-            om.writeValue(generator,tableJson);
+            om.writeValue(generator,tableJsons);
         }
     }
 }

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * Created by jianyuan.wei@hand-china.com
  * on 2019/4/21 0:25.
@@ -21,16 +19,10 @@ public class Test {
     private ThingTestMapper thingTest;
 
     @GetMapping("/query")
-    public List<Table<Long,String,String>> test(){
-        List<Table<Long, String, String>> tables = thingTest.queryInfo(null);
-        for(Table<Long,String,String> table :tables) {
-            Object code = table.getColumnByAlias(581L,"code");
-            Object thingId = table.getColumnByAlias(581L,"thingId");
-            Object name = table.getColumnByAlias(581L, "name");
-            System.out.println(name);
-            System.out.println(code);
-            System.out.println(thingId);
-        }
-        return tables;
+    public Table<Long,String,String> test(){
+        Table<Long,String,String> table = thingTest.queryInfo(null);
+        Table.TableEntry tableEntry = table.get(727L);
+        Object name = table.getColumnByAlias(727L, "name");
+        return table;
     }
 }

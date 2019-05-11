@@ -54,31 +54,13 @@ public class ResultSetInterceptor implements Interceptor {
         Type[] types = null;
         if(genericType instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType)genericType;
-            Type[] argsTypes = pt.getActualTypeArguments();
-            if(argsTypes.length == 1 && argsTypes[0] instanceof ParameterizedType) {
-                ParameterizedType ptt = (ParameterizedType)argsTypes[0];
-                types = ptt.getActualTypeArguments();
-            }
+            types = pt.getActualTypeArguments();
         }
         System.out.println(genericType.getTypeName());
         RSMap rsMap = currentMethod.getAnnotation(RSMap.class);
         Statement statement = (Statement) invocation.getArgs()[0];
         TypeHandlerRegistry thr = mappedStatement.getConfiguration().getTypeHandlerRegistry();
         return  resultHandle(statement,thr,rsMap,types);
-    }
-
-    /**
-     * 获取Table中的泛型
-     * @param method
-     * @return
-     */
-    private List<Class<?>> getGenericType(Method method) {
-        Type returnType = method.getGenericReturnType();
-        if(returnType instanceof ParameterizedType) {
-            ParameterizedType pt = (ParameterizedType)returnType;
-            Type[] actualTypeArguments = pt.getActualTypeArguments();
-        }
-        return null;
     }
 
     /**
@@ -91,9 +73,9 @@ public class ResultSetInterceptor implements Interceptor {
     private Object resultHandle(Statement statement, TypeHandlerRegistry thr, RSMap rsMap,Type[] types) throws SQLException {
         ResultSet resultSet = statement.getResultSet();
         List<Table<Object,Object,Object>> tables = new ArrayList<>();
+        Table<Object,Object,Object> table = new Table<>();
         if(rsMap.num() == 3) {
             while (resultSet.next()) {
-                Table<Object,Object,Object> table = new Table<>();
                 ResultSetMetaData rsmd = resultSet.getMetaData();
                 table.setKeyAlias(columnNameFormat(rsmd.getColumnName(1)));
                 table.setMidAlias(columnNameFormat(rsmd.getColumnName(2)));
@@ -102,9 +84,9 @@ public class ResultSetInterceptor implements Interceptor {
                 Object mid = this.getObject(resultSet, 2, thr, getTypeByIndex(types,1));
                 Object value = this.getObject(resultSet, 3, thr, getTypeByIndex(types,2));
                 table.put(key, mid, value);
-                tables.add(table);
             }
         }
+        tables.add(table);
         System.out.println(tables);
         return tables;
     }
