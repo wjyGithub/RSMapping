@@ -108,6 +108,11 @@ public class Table<K,T,V> implements Serializable{
         TableEntry tableEntry = new TableEntry();
         tableEntry.setKey(key);
         Map<T, V> tvMap = tableHashMap.get(key);
+        Set<Map.Entry<K, Map<T, V>>> testEntrys = tableHashMap.entrySet();
+        for(Map.Entry<K,Map<T,V>> entry : testEntrys) {
+            K key1 = entry.getKey();
+            Map<T, V> tvMap1 = tableHashMap.get(key1);
+        }
         if(tvMap == null || tvMap.isEmpty()) {
             return null;
         }

@@ -32,7 +32,8 @@ public enum ClassMapEnum {
 
     public static final ClassMapEnum getClassMapEnum(String name) {
         try {
-            return ClassMapEnum.valueOf(StringUtils.upperCase(name));
+            String[] types = StringUtils.upperCase(name).split("\\.");
+            return ClassMapEnum.valueOf(types[types.length -1]);
         }catch (Exception e) {
             return DEFAULT;
         }
